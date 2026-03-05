@@ -6,7 +6,7 @@
    "orientation": "any",
    "scope": "/",
    "short_name": "İnternetsizMiniOyunlar",
-   "start_url": "/https://kuzeyabaci.github.io/Minigamess/",
+   "start_url": "https://kuzeyabaci.github.io/Minigamess/",
    "theme_color": "#ffffff",
    "id": "com.kuzeyabaci.internetsizminioyunlar",
    "related_applications": [
