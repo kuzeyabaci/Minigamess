@@ -1,18 +1,15 @@
-  { "background_color": "#ffffff",
-   "dir": "ltr",
-   "display": "standalone",
-   "name": "İnternetsizMiniOyunlar",
-   "orientation": "any",
-   "scope": "/",
-   "short_name": "İnternetsizMiniOyunlar",
-   "start_url": "/https://kuzeyabaci.github.io/Minigamess/",
-   "theme_color": "#ffffff",
-   "id": "com.kuzeyabaci.internetsizminioyunlar",
-   "related_applications": [
-      {
-         "platform": "play",
-         "url": "https://kuzeyabaci.github.io/Minigamess/",
-         "id": "com.kuzeyabaci.internetsizminioyunlar"
-      }
-   ]
+"background_color": "#08080f",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "İnternetsizMiniOyunlar",
+  "orientation": "any",
+  "scope": "/Minigamess/",
+  "short_name": "İnternetsizMiniOyunlar",
+  "start_url": "/Minigamess/",
+  "theme_color": "#08080f",
+  "id": "com.kuzeyabaci.internetsizminioyunlar",
+  "icons": [
+    {"src": "https://kuzeyabaci.github.io/Minigamess/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "https://kuzeyabaci.github.io/Minigamess/icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
 }
