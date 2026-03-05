@@ -4,29 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Mini Oyunlar</title>
-<link rel="manifest" href="/Minigamess/manifest.json">
-<meta name="theme-color" content="#08080f">
-<link rel="apple-touch-icon" href="/Minigamess/icon-512.png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#08080f;min-height:100vh;font-family:'Nunito',sans-serif;overflow-x:hidden;user-select:none;-webkit-user-select:none}
-#menu{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px 40px}
+body{background:#08080f;min-height:100vh;font-family:'Nunito',sans-serif;overflow-x:hidden}
+#menu{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px 40px;position:relative;z-index:1}
 .logo{font-family:'Orbitron',monospace;font-size:22px;font-weight:900;letter-spacing:3px;margin-bottom:4px;background:linear-gradient(135deg,#ffd60a,#ff9f0a,#ff2d55,#bf5af2,#0a84ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .sub{color:#333;font-size:9px;letter-spacing:4px;margin-bottom:24px;font-family:'Orbitron',monospace}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%;max-width:380px}
-.card{background:var(--bg);border:2px solid rgba(128,128,128,0.12);border-radius:18px;padding:20px 14px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s}
+.card{background:var(--bg);border:2px solid rgba(128,128,128,0.12);border-radius:18px;padding:20px 14px;text-align:center;cursor:pointer;transition:transform 0.15s;-webkit-tap-highlight-color:transparent}
 .card:active{transform:scale(0.92)}
 .em{font-size:36px;margin-bottom:8px}
 .tt{color:#fff;font-size:12px;font-weight:900}
-.star{position:fixed;background:#fff;border-radius:50%;animation:tw var(--d) ease-in-out infinite alternate;pointer-events:none}
+.star{position:fixed;background:#fff;border-radius:50%;animation:tw var(--d) ease-in-out infinite alternate;pointer-events:none;z-index:0}
 @keyframes tw{from{opacity:.05}to{opacity:.5}}
-#gview{position:fixed;inset:0;display:none;flex-direction:column;background:#08080f;z-index:50}
-#gview.on{display:flex}
-#tb{display:flex;align-items:center;gap:10px;background:#0d0d1a;padding:6px 12px;border-bottom:1px solid #1a1a3a;height:46px;flex-shrink:0}
-#bb{background:#1a1a3a;border:1px solid #2a2a5a;color:#aaa;width:36px;height:36px;border-radius:10px;font-size:18px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#gv{position:fixed;inset:0;z-index:100;display:none;flex-direction:column;background:#08080f}
+#gv.on{display:flex}
+#tb{display:flex;align-items:center;gap:12px;background:#0d0d1a;padding:7px 12px;border-bottom:1px solid #1a1a3a;flex-shrink:0;height:46px}
+#bb{background:#1a1a3a;border:1px solid #2a2a5a;color:#aaa;width:36px;height:36px;border-radius:10px;font-size:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;flex-shrink:0;font-family:sans-serif;display:flex;align-items:center;justify-content:center}
+#bb:active{background:#3a3a7a;color:#fff}
 #gt{color:#fff;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:1px}
-#gframe{flex:1;border:none;width:100%;height:100%}
+#gw{flex:1;position:relative;overflow:hidden}
+#gw iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+[id="gd-flappy"]{display:none}[id="gd-yilan"]{display:none}[id="gd-tetris"]{display:none}[id="gd-g2048"]{display:none}[id="gd-pingpong"]{display:none}[id="gd-brick"]{display:none}[id="gd-hafiza"]{display:none}[id="gd-labirent"]{display:none}[id="gd-uzay"]{display:none}[id="gd-dino"]{display:none}
 </style>
 </head>
 <body>
@@ -42,82 +42,95 @@ body{background:#08080f;min-height:100vh;font-family:'Nunito',sans-serif;overflo
 <div id="gd-dino" data-b="PCFET0NUWVBFIGh0bWw+CjxodG1sPgo8aGVhZD4KPG1ldGEgY2hhcnNldD0iVVRGLTgiPgo8bWV0YSBuYW1lPSJ2aWV3cG9ydCIgY29udGVudD0id2lkdGg9ZGV2aWNlLXdpZHRoLCBpbml0aWFsLXNjYWxlPTEuMCwgbWF4aW11bS1zY2FsZT0xLjAsIHVzZXItc2NhbGFibGU9bm8iPgo8dGl0bGU+RGlubyBLb8WfdXN1PC90aXRsZT4KPHN0eWxlPgoqe21hcmdpbjowO3BhZGRpbmc6MDtib3gtc2l6aW5nOmJvcmRlci1ib3h9CmJvZHl7YmFja2dyb3VuZDojMGExYTBhO2Rpc3BsYXk6ZmxleDtmbGV4LWRpcmVjdGlvbjpjb2x1bW47YWxpZ24taXRlbXM6Y2VudGVyO2p1c3RpZnktY29udGVudDpjZW50ZXI7bWluLWhlaWdodDoxMDB2aDtmb250LWZhbWlseTonT3JiaXRyb24nLG1vbm9zcGFjZTtvdmVyZmxvdzpoaWRkZW47dXNlci1zZWxlY3Q6bm9uZTstd2Via2l0LXVzZXItc2VsZWN0Om5vbmV9CiN1aXtkaXNwbGF5OmZsZXg7Z2FwOjIwcHg7bWFyZ2luLWJvdHRvbToxMHB4fQouYm94e2JhY2tncm91bmQ6IzBkMWYwZDtib3JkZXItcmFkaXVzOjhweDtwYWRkaW5nOjVweCAxNHB4O3RleHQtYWxpZ246Y2VudGVyfQouYmx7Y29sb3I6IzJhNGEyYTtmb250LXNpemU6N3B4O2xldHRlci1zcGFjaW5nOjJweH0KLmJ2e2NvbG9yOiNmZmY7Zm9udC1zaXplOjE0cHg7Zm9udC13ZWlnaHQ6NzAwfQpjYW52YXN7ZGlzcGxheTpibG9jaztib3JkZXItcmFkaXVzOjhweDtib3JkZXI6MXB4IHNvbGlkICMxYTNhMWE7Ym94LXNoYWRvdzowIDAgMzBweCAjMDBmZjQ0MjI7dG91Y2gtYWN0aW9uOm5vbmV9CiNtc2d7Y29sb3I6IzJhNGEyYTtmb250LXNpemU6OXB4O2xldHRlci1zcGFjaW5nOjJweDttYXJnaW4tdG9wOjEwcHg7dGV4dC1hbGlnbjpjZW50ZXI7bWluLWhlaWdodDoxNnB4fQo8L3N0eWxlPgo8L2hlYWQ+Cjxib2R5Pgo8ZGl2IGlkPSJ1aSI+CiAgPGRpdiBjbGFzcz0iYm94Ij48ZGl2IGNsYXNzPSJibCI+U0tPUjwvZGl2PjxkaXYgY2xhc3M9ImJ2IiBpZD0ic2MiPjA8L2Rpdj48L2Rpdj4KICA8ZGl2IGNsYXNzPSJib3giPjxkaXYgY2xhc3M9ImJsIj5FTiDEsFnEsDwvZGl2PjxkaXYgY2xhc3M9ImJ2IiBpZD0iYmUiPjA8L2Rpdj48L2Rpdj4KICA8ZGl2IGNsYXNzPSJib3giPjxkaXYgY2xhc3M9ImJsIj5ISVo8L2Rpdj48ZGl2IGNsYXNzPSJidiIgaWQ9InNwIj4xeDwvZGl2PjwvZGl2Pgo8L2Rpdj4KPGNhbnZhcyBpZD0iYyIgd2lkdGg9IjM2MCIgaGVpZ2h0PSIyMjAiPjwvY2FudmFzPgo8ZGl2IGlkPSJtc2ciPlrEsXBsYW1hayBpw6dpbiBkb2t1biB2ZXlhIGJvxZ9sdWs8L2Rpdj4KPHNjcmlwdD4KY29uc3QgY2FudmFzPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjJyksY3R4PWNhbnZhcy5nZXRDb250ZXh0KCcyZCcpOwpjb25zdCBDVz0zNjAsQ0g9MjIwOwpjb25zdCBHUk9VTkQ9Q0gtNDA7CgpsZXQgZGlubyxvYnN0YWNsZXMsY2xvdWRzLHBhcnRpY2xlcyxzY29yZSxiZXN0LHNwZWVkLHN0YXRlLGZyYW1lLHNwYXduVGltZXI7CgpmdW5jdGlvbiBpbml0KCl7CiAgZGlubz17eDo2MCx5OkdST1VORCx3OjI4LGg6MzYsdnk6MCxvbkdyb3VuZDp0cnVlLGZyYW1lOjAsZGVhZDpmYWxzZX07CiAgb2JzdGFjbGVzPVtdO2Nsb3Vkcz1bXTtwYXJ0aWNsZXM9W107CiAgc2NvcmU9MDtzcGVlZD00O2ZyYW1lPTA7c3Bhd25UaW1lcj02MDtzdGF0ZT0naWRsZSc7CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3NjJykudGV4dENvbnRlbnQ9MDsKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnc3AnKS50ZXh0Q29udGVudD0nMXgnOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdtc2cnKS50ZXh0Q29udGVudD0nWsSxcGxhbWFrIGnDp2luIGRva3VuIHZleWEgYm/Fn2x1ayc7Cn0KCmZ1bmN0aW9uIGp1bXAoKXsKICBpZihzdGF0ZT09PSdkZWFkJyl7aW5pdCgpO3JldHVybjt9CiAgaWYoc3RhdGU9PT0naWRsZScpe3N0YXRlPSdwbGF5aW5nJztkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnbXNnJykudGV4dENvbnRlbnQ9Jyc7fQogIGlmKGRpbm8ub25Hcm91bmQpe2Rpbm8udnk9LTEzO2Rpbm8ub25Hcm91bmQ9ZmFsc2U7fQp9CgpmdW5jdGlvbiBzcGF3blAoeCx5LGNvbCl7CiAgZm9yKGxldCBpPTA7aTwxMDtpKyspewogICAgY29uc3QgYT1NYXRoLnJhbmRvbSgpKk1hdGguUEkqMixzPU1hdGgucmFuZG9tKCkqNCsxOwogICAgcGFydGljbGVzLnB1c2goe3gseSx2eDpNYXRoLmNvcyhhKSpzLHZ5Ok1hdGguc2luKGEpKnMsbGlmZToxLGNvbG9yOmNvbCxyOk1hdGgucmFuZG9tKCkqMysxfSk7CiAgfQp9CgpmdW5jdGlvbiB1cGRhdGUoKXsKICBpZihzdGF0ZSE9PSdwbGF5aW5nJylyZXR1cm47CiAgZnJhbWUrKzsKCiAgLy8gU2NvcmUgJiBzcGVlZAogIHNjb3JlKys7CiAgc3BlZWQ9NCtNYXRoLmZsb29yKHNjb3JlLzMwMCkqMC41OwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdzYycpLnRleHRDb250ZW50PU1hdGguZmxvb3Ioc2NvcmUvNSk7CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3NwJykudGV4dENvbnRlbnQrKE1hdGguZmxvb3Ioc2NvcmUvMzAwKSsxKSsneCc7CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3NwJykudGV4dENvbnRlbnQ9KDErTWF0aC5mbG9vcihzY29yZS8zMDApKjAuNSkudG9GaXhlZCgxKSsneCc7CgogIC8vIERpbm8KICBkaW5vLnZ5Kz0wLjc7CiAgZGluby55Kz1kaW5vLnZ5OwogIGRpbm8uZnJhbWUrKzsKICBpZihkaW5vLnk+PUdST1VORCl7ZGluby55PUdST1VORDtkaW5vLnZ5PTA7ZGluby5vbkdyb3VuZD10cnVlO30KCiAgLy8gQ2xvdWRzCiAgaWYoZnJhbWUlODA9PT0wKWNsb3Vkcy5wdXNoKHt4OkNXLHk6MzArTWF0aC5yYW5kb20oKSo0MCx3OjYwK01hdGgucmFuZG9tKCkqNDAsaDoyMCtNYXRoLnJhbmRvbSgpKjEwfSk7CiAgY2xvdWRzLmZvckVhY2goYz0+Yy54LT1zcGVlZCowLjMpOwogIGNsb3Vkcz1jbG91ZHMuZmlsdGVyKGM9PmMueD4tMTAwKTsKCiAgLy8gT2JzdGFjbGVzCiAgc3Bhd25UaW1lci0tOwogIGlmKHNwYXduVGltZXI8PTApewogICAgY29uc3QgdHlwZXM9WydjYWN0dXMnLCdjYWN0dXMnLCdiaXJkJ107CiAgICBjb25zdCB0eXBlPXR5cGVzW01hdGguZmxvb3IoTWF0aC5yYW5kb20oKSp0eXBlcy5sZW5ndGgpXTsKICAgIGNvbnN0IGg9dHlwZT09PSdiaXJkJz8yNDozMCtNYXRoLnJhbmRvbSgpKjIwOwogICAgY29uc3QgeT10eXBlPT09J2JpcmQnP0dST1VORC01MC1NYXRoLnJhbmRvbSgpKjMwOkdST1VORDsKICAgIG9ic3RhY2xlcy5wdXNoKHt4OkNXKzIwLHksdzoxOCxoLHR5cGUsZnJhbWU6MH0pOwogICAgc3Bhd25UaW1lcj02MCtNYXRoLnJhbmRvbSgpKjgwOwogIH0KICBvYnN0YWNsZXMuZm9yRWFjaChvPT57by54LT1zcGVlZDtvLmZyYW1lKys7fSk7CiAgb2JzdGFjbGVzPW9ic3RhY2xlcy5maWx0ZXIobz0+by54Pi00MCk7CgogIC8vIENvbGxpc2lvbgogIG9ic3RhY2xlcy5mb3JFYWNoKG89PnsKICAgIGNvbnN0IHBhZD02OwogICAgaWYoZGluby54K2Rpbm8udy1wYWQ+by54K3BhZCYmZGluby54K3BhZDxvLngrby53LXBhZCYmZGluby55LWRpbm8uaCtwYWQ8by55JiZkaW5vLnktcGFkPm8ueS1vLmgpewogICAgICBzdGF0ZT0nZGVhZCc7ZGluby5kZWFkPXRydWU7CiAgICAgIHNwYXduUChkaW5vLngrZGluby53LzIsZGluby55LWRpbm8uaC8yLCcjMDBmZjQ0Jyk7CiAgICAgIGlmKE1hdGguZmxvb3Ioc2NvcmUvNSk+YmVzdCl7YmVzdD1NYXRoLmZsb29yKHNjb3JlLzUpO2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdiZScpLnRleHRDb250ZW50PWJlc3Q7fQogICAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnbXNnJykudGV4dENvbnRlbnQ9J8OHQVJQVNCY0J0g4oCUIHRla3JhciBpw6dpbiBkb2t1bic7CiAgICB9CiAgfSk7CgogIHBhcnRpY2xlcy5mb3JFYWNoKHA9PntwLngrPXAudng7cC55Kz1wLnZ5O3AudnkrPTAuMTU7cC5saWZlLT0wLjA0O30pOwogIHBhcnRpY2xlcz1wYXJ0aWNsZXMuZmlsdGVyKHA9PnAubGlmZT4wKTsKfQoKZnVuY3Rpb24gZHJhd0Rpbm8oeCx5LHcsaCxmcixkZWFkKXsKICBjdHguc2F2ZSgpO2N0eC50cmFuc2xhdGUoeCt3LzIseSk7CiAgaWYoZGVhZCl7Y3R4LnJvdGF0ZShNYXRoLm1pbihmcmFtZSowLjEsTWF0aC5QSS8yKSk7Y3R4Lmdsb2JhbEFscGhhPTAuNjt9CiAgLy8gQm9keQogIGN0eC5zaGFkb3dDb2xvcj0nIzAwZmY0NCc7Y3R4LnNoYWRvd0JsdXI9MTA7CiAgY3R4LmZpbGxTdHlsZT0nIzAwY2MzMyc7CiAgY3R4LmJlZ2luUGF0aCgpO2N0eC5yb3VuZFJlY3QoLXcvMiwtaCx3LGgqMC43LDYpO2N0eC5maWxsKCk7CiAgLy8gSGVhZAogIGN0eC5maWxsU3R5bGU9JyMwMGVlNDQnOwogIGN0eC5iZWdpblBhdGgoKTtjdHgucm91bmRSZWN0KDAsLWgsdyowLjYsaCowLjQsNCk7Y3R4LmZpbGwoKTsKICAvLyBFeWUKICBjdHguZmlsbFN0eWxlPScjMDAwJztjdHguYmVnaW5QYXRoKCk7Y3R4LmFyYyh3KjAuMjUsLWgrOCwzLDAsTWF0aC5QSSoyKTtjdHguZmlsbCgpOwogIGN0eC5maWxsU3R5bGU9JyNmZmYnO2N0eC5iZWdpblBhdGgoKTtjdHguYXJjKHcqMC4yNS0xLC1oKzcsMS41LDAsTWF0aC5QSSoyKTtjdHguZmlsbCgpOwogIC8vIExlZ3MKICBjdHguZmlsbFN0eWxlPScjMDBhYTIyJzsKICBjb25zdCBsZWdPZmZzZXQ9TWF0aC5zaW4oZnIqMC4zKSo2OwogIGN0eC5iZWdpblBhdGgoKTtjdHgucm91bmRSZWN0KC13LzIrMiwtaCowLjM1K2xlZ09mZnNldCw4LGgqMC4zOCwzKTtjdHguZmlsbCgpOwogIGN0eC5iZWdpblBhdGgoKTtjdHgucm91bmRSZWN0KC13LzIrMTIsLWgqMC4zNS1sZWdPZmZzZXQsOCxoKjAuMzgsMyk7Y3R4LmZpbGwoKTsKICBjdHguc2hhZG93Qmx1cj0wO2N0eC5nbG9iYWxBbHBoYT0xO2N0eC5yZXN0b3JlKCk7Cn0KCmZ1bmN0aW9uIGRyYXdDYWN0dXMobyl7CiAgY3R4LnNhdmUoKTtjdHgudHJhbnNsYXRlKG8ueCxvLnkpOwogIGN0eC5zaGFkb3dDb2xvcj0nI2ZmNDQwMCc7Y3R4LnNoYWRvd0JsdXI9NjsKICBjdHguZmlsbFN0eWxlPScjY2MzMzAwJzsKICBjdHguYmVnaW5QYXRoKCk7Y3R4LnJvdW5kUmVjdCgtby53LzIsLW8uaCxvLncsby5oLDMpO2N0eC5maWxsKCk7CiAgY3R4LmJlZ2luUGF0aCgpO2N0eC5yb3VuZFJlY3QoLW8udywtby5oKjAuNixvLncqMC41LG8uaCowLjQsMik7Y3R4LmZpbGwoKTsKICBjdHguYmVnaW5QYXRoKCk7Y3R4LnJvdW5kUmVjdChvLncqMC41LC1vLmgqMC41LG8udyowLjUsby5oKjAuMywyKTtjdHguZmlsbCgpOwogIGN0eC5zaGFkb3dCbHVyPTA7Y3R4LnJlc3RvcmUoKTsKfQoKZnVuY3Rpb24gZHJhd0JpcmQobyl7CiAgY3R4LnNhdmUoKTtjdHgudHJhbnNsYXRlKG8ueCxvLnkpOwogIGNvbnN0IHdpbmc9TWF0aC5zaW4oby5mcmFtZSowLjI1KSo4OwogIGN0eC5zaGFkb3dDb2xvcj0nI2ZmOWYwYSc7Y3R4LnNoYWRvd0JsdXI9ODsKICBjdHguZmlsbFN0eWxlPScjZmY2NjAwJzsKICBjdHguYmVnaW5QYXRoKCk7Y3R4LmVsbGlwc2UoMCwtby5oLzIsby53LzIsby5oLzMsMCwwLE1hdGguUEkqMik7Y3R4LmZpbGwoKTsKICBjdHguZmlsbFN0eWxlPScjZmZhYTAwJzsKICBjdHguYmVnaW5QYXRoKCk7Y3R4LmVsbGlwc2UoLW8udy8yLHdpbmctby5oLzIsby53LzIsby5oLzQsLTAuMywwLE1hdGguUEkqMik7Y3R4LmZpbGwoKTsKICBjdHguYmVnaW5QYXRoKCk7Y3R4LmVsbGlwc2Uoby53LzIsLXdpbmctby5oLzIsby53LzIsby5oLzQsMC4zLDAsTWF0aC5QSSoyKTtjdHguZmlsbCgpOwogIGN0eC5zaGFkb3dCbHVyPTA7Y3R4LnJlc3RvcmUoKTsKfQoKZnVuY3Rpb24gZHJhdygpewogIC8vIFNreSBncmFkaWVudAogIGNvbnN0IHNnPWN0eC5jcmVhdGVMaW5lYXJHcmFkaWVudCgwLDAsMCxDSCk7CiAgc2cuYWRkQ29sb3JTdG9wKDAsJyMwYTFhMGEnKTtzZy5hZGRDb2xvclN0b3AoMSwnIzBkMmEwZCcpOwogIGN0eC5maWxsU3R5bGU9c2c7Y3R4LmZpbGxSZWN0KDAsMCxDVyxDSCk7CgogIC8vIENsb3VkcwogIGNsb3Vkcy5mb3JFYWNoKGM9PnsKICAgIGN0eC5maWxsU3R5bGU9J3JnYmEoMjU1LDI1NSwyNTUsMC4wNiknOwogICAgY3R4LmJlZ2luUGF0aCgpO2N0eC5lbGxpcHNlKGMueCxjLnksYy53LzIsYy5oLzIsMCwwLE1hdGguUEkqMik7Y3R4LmZpbGwoKTsKICB9KTsKCiAgLy8gR3JvdW5kCiAgY3R4LmZpbGxTdHlsZT0nIzFhM2ExYSc7Y3R4LmZpbGxSZWN0KDAsR1JPVU5EKzIsQ1csQ0gtR1JPVU5ELTIpOwogIGN0eC5zdHJva2VTdHlsZT0nIzAwZmY0NCc7Y3R4LmxpbmVXaWR0aD0yO2N0eC5zZXRMaW5lRGFzaChbOCw2XSk7CiAgY3R4LmJlZ2luUGF0aCgpO2N0eC5tb3ZlVG8oMCxHUk9VTkQrMik7Y3R4LmxpbmVUbyhDVyxHUk9VTkQrMik7Y3R4LnN0cm9rZSgpOwogIGN0eC5zZXRMaW5lRGFzaChbXSk7CgogIHBhcnRpY2xlcy5mb3JFYWNoKHA9PntjdHguYmVnaW5QYXRoKCk7Y3R4LmFyYyhwLngscC55LHAucipwLmxpZmUsMCxNYXRoLlBJKjIpO2N0eC5maWxsU3R5bGU9cC5jb2xvcjtjdHguZ2xvYmFsQWxwaGE9cC5saWZlO2N0eC5maWxsKCk7fSk7Y3R4Lmdsb2JhbEFscGhhPTE7CgogIG9ic3RhY2xlcy5mb3JFYWNoKG89PntvLnR5cGU9PT0nYmlyZCc/ZHJhd0JpcmQobyk6ZHJhd0NhY3R1cyhvKTt9KTsKICBkcmF3RGlubyhkaW5vLngsZGluby55LGRpbm8udyxkaW5vLmgsZGluby5mcmFtZSxkaW5vLmRlYWQpOwoKICBpZihzdGF0ZT09PSdpZGxlJyl7CiAgICBjdHguZmlsbFN0eWxlPSdyZ2JhKDEwLDI2LDEwLDAuNzUpJztjdHguZmlsbFJlY3QoMCwwLENXLENIKTsKICAgIGN0eC5zaGFkb3dDb2xvcj0nIzAwZmY0NCc7Y3R4LnNoYWRvd0JsdXI9MjA7CiAgICBjdHguZmlsbFN0eWxlPScjMDBmZjQ0JztjdHguZm9udD0nYm9sZCAyMnB4IE9yYml0cm9uJztjdHgudGV4dEFsaWduPSdjZW50ZXInOwogICAgY3R4LmZpbGxUZXh0KCdExLBOTyBLT8WeVVNVJyxDVy8yLENILzItMTApOwogICAgY3R4LnNoYWRvd0JsdXI9MDtjdHguZmlsbFN0eWxlPScjMmE0YTJhJztjdHguZm9udD0nOXB4IE9yYml0cm9uJzsKICAgIGN0eC5maWxsVGV4dCgnWklQTEFNQUsgxLDDh8SwTiBET0tVTicsQ1cvMixDSC8yKzE2KTsKICB9Cn0KCmZ1bmN0aW9uIGxvb3AoKXt1cGRhdGUoKTtkcmF3KCk7cmVxdWVzdEFuaW1hdGlvbkZyYW1lKGxvb3ApO30KCmRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoJ2tleWRvd24nLGU9PntpZihlLmNvZGU9PT0nU3BhY2UnKXtlLnByZXZlbnREZWZhdWx0KCk7anVtcCgpO319KTsKY2FudmFzLmFkZEV2ZW50TGlzdGVuZXIoJ2NsaWNrJyxqdW1wKTsKY2FudmFzLmFkZEV2ZW50TGlzdGVuZXIoJ3RvdWNoc3RhcnQnLGU9PntlLnByZXZlbnREZWZhdWx0KCk7anVtcCgpO30se3Bhc3NpdmU6ZmFsc2V9KTsKCmluaXQoKTtsb29wKCk7CmJlc3Q9MDsKPC9zY3JpcHQ+CjwvYm9keT4KPC9odG1sPgo="></div>
 
 <div id="menu">
-  <div class="logo">&#127918; MİNİ OYUNLAR</div>
-  <div class="sub">10 OYUN - SONSUZ EGLENCE</div>
+  <div class="logo">🎮 MİNİ OYUNLAR</div>
+  <div class="sub">10 OYUN · SONSUZ EĞLENCe</div>
   <div class="grid">
-<div class="card" data-id="flappy" style="--c:#ffd60a;--bg:#1a1000"><div class="em">🐦</div><div class="tt">Flappy Kuş</div></div>
-<div class="card" data-id="yilan" style="--c:#30d158;--bg:#001a00"><div class="em">🐍</div><div class="tt">Yılan</div></div>
-<div class="card" data-id="tetris" style="--c:#0a84ff;--bg:#00001a"><div class="em">🧱</div><div class="tt">Tetris</div></div>
-<div class="card" data-id="g2048" style="--c:#ff9f0a;--bg:#1a0800"><div class="em">🔢</div><div class="tt">2048</div></div>
-<div class="card" data-id="pingpong" style="--c:#64d2ff;--bg:#00101a"><div class="em">🏓</div><div class="tt">Ping Pong</div></div>
-<div class="card" data-id="brick" style="--c:#bf5af2;--bg:#0d001a"><div class="em">🧨</div><div class="tt">Brick Breaker</div></div>
-<div class="card" data-id="hafiza" style="--c:#ffd60a;--bg:#1a1400"><div class="em">🧠</div><div class="tt">Hafıza</div></div>
-<div class="card" data-id="labirent" style="--c:#00ffaa;--bg:#001a10"><div class="em">🌀</div><div class="tt">Labirent</div></div>
-<div class="card" data-id="uzay" style="--c:#ff2d55;--bg:#1a0008"><div class="em">🚀</div><div class="tt">Uzay Savaşı</div></div>
-<div class="card" data-id="dino" style="--c:#30d158;--bg:#001400"><div class="em">🦕</div><div class="tt">Dino Koşusu</div></div>
-
+<div class="card" onclick="play('flappy')" style="--c:#ffd60a;--bg:#1a1000">
+  <div class="em">🐦</div>
+  <div class="tt">Flappy Kuş</div>
+</div>
+<div class="card" onclick="play('yilan')" style="--c:#30d158;--bg:#001a00">
+  <div class="em">🐍</div>
+  <div class="tt">Yılan</div>
+</div>
+<div class="card" onclick="play('tetris')" style="--c:#0a84ff;--bg:#00001a">
+  <div class="em">🧱</div>
+  <div class="tt">Tetris</div>
+</div>
+<div class="card" onclick="play('g2048')" style="--c:#ff9f0a;--bg:#1a0800">
+  <div class="em">🔢</div>
+  <div class="tt">2048</div>
+</div>
+<div class="card" onclick="play('pingpong')" style="--c:#64d2ff;--bg:#00101a">
+  <div class="em">🏓</div>
+  <div class="tt">Ping Pong</div>
+</div>
+<div class="card" onclick="play('brick')" style="--c:#bf5af2;--bg:#0d001a">
+  <div class="em">🧨</div>
+  <div class="tt">Brick Breaker</div>
+</div>
+<div class="card" onclick="play('hafiza')" style="--c:#ffd60a;--bg:#1a1400">
+  <div class="em">🧠</div>
+  <div class="tt">Hafıza</div>
+</div>
+<div class="card" onclick="play('labirent')" style="--c:#00ffaa;--bg:#001a10">
+  <div class="em">🌀</div>
+  <div class="tt">Labirent</div>
+</div>
+<div class="card" onclick="play('uzay')" style="--c:#ff2d55;--bg:#1a0008">
+  <div class="em">🚀</div>
+  <div class="tt">Uzay Savaşı</div>
+</div>
+<div class="card" onclick="play('dino')" style="--c:#30d158;--bg:#001400">
+  <div class="em">🦕</div>
+  <div class="tt">Dino Koşusu</div>
+</div>
   </div>
 </div>
-<div id="gview">
+<div id="gv">
   <div id="tb">
     <button id="bb" onclick="back()">&#8592;</button>
     <div id="gt"></div>
   </div>
-  <iframe id="gframe" sandbox="allow-scripts allow-same-origin"></iframe>
+  <div id="gw"></div>
 </div>
 <script>
-var T = {};
-T["flappy"] = "🐦 Flappy Kuş";
-T["yilan"] = "🐍 Yılan";
-T["tetris"] = "🧱 Tetris";
-T["g2048"] = "🔢 2048";
-T["pingpong"] = "🏓 Ping Pong";
-T["brick"] = "🧨 Brick Breaker";
-T["hafiza"] = "🧠 Hafıza";
-T["labirent"] = "🌀 Labirent";
-T["uzay"] = "🚀 Uzay Savaşı";
-T["dino"] = "🦕 Dino Koşusu";
-
-for(var i=0;i<55;i++){
-  var s=document.createElement("div");
-  s.className="star";
-  s.style.width=(Math.random()*2+1)+"px";
-  s.style.height=s.style.width;
-  s.style.left=(Math.random()*100)+"%";
-  s.style.top=(Math.random()*100)+"%";
-  s.style.setProperty("--d",(Math.random()*3+1).toFixed(1)+"s");
-  document.body.appendChild(s);
-}
-
-document.querySelectorAll(".card").forEach(function(c){
-  c.addEventListener("click",function(){ play(this.dataset.id); });
-});
+var T={"flappy":"🐦 Flappy Kuş","yilan":"🐍 Yılan","tetris":"🧱 Tetris","g2048":"🔢 2048","pingpong":"🏓 Ping Pong","brick":"🧨 Brick Breaker","hafiza":"🧠 Hafıza","labirent":"🌀 Labirent","uzay":"🚀 Uzay Savaşı","dino":"🦕 Dino Koşusu"};
+(function(){
+  for(var i=0;i<55;i++){
+    var s=document.createElement('div');
+    s.className='star';
+    s.style.width=(Math.random()*2+1)+'px';
+    s.style.height=s.style.width;
+    s.style.left=(Math.random()*100)+'%';
+    s.style.top=(Math.random()*100)+'%';
+    s.style.setProperty('--d',(Math.random()*3+1).toFixed(1)+'s');
+    document.body.appendChild(s);
+  }
+})();
 
 function play(id){
-  var el=document.getElementById("gd-"+id);
-  var b64=el.getAttribute("data-b");
+  var el=document.getElementById('gd-'+id);
+  var b64=el.getAttribute('data-b');
   var bin=atob(b64);
   var bytes=new Uint8Array(bin.length);
   for(var i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
-  var html=new TextDecoder("utf-8").decode(bytes);
-  var f=document.getElementById("gframe");
+  var html=new TextDecoder().decode(bytes);
+  var gw=document.getElementById('gw');
+  gw.innerHTML='';
+  var f=document.createElement('iframe');
+  f.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:none';
   f.srcdoc=html;
-  document.getElementById("gt").textContent=T[id]||id;
-  document.getElementById("gview").classList.add("on");
-  document.body.style.overflow="hidden";
+  gw.appendChild(f);
+  document.getElementById('gt').textContent=T[id]||id;
+  document.getElementById('gv').classList.add('on');
+  document.body.style.overflow='hidden';
 }
 
 function back(){
-  var f=document.getElementById("gframe");
-  f.srcdoc="<!DOCTYPE html><html><body></body></html>";
-  document.getElementById("gview").classList.remove("on");
-  document.body.style.overflow="";
-}
-
-if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("/Minigamess/pwabuilder-sw.js")
-    .then(function(){ console.log("SW OK"); })
-    .catch(function(e){ console.log("SW err",e); });
+  document.getElementById('gw').innerHTML='';
+  document.getElementById('gv').classList.remove('on');
+  document.body.style.overflow='';
 }
 </script>
 </body>
