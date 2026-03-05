@@ -1,0 +1,12 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "kuzeyabaci.github",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "kuzeyabaci.github",
+  "start_url": "/https://kuzeyabaci.github.io/Minigamess/",
+  "theme_color": "#ffffff",
+  "lang": "tr"
+}
